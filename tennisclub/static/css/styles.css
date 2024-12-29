@@ -270,6 +270,87 @@ footer p {
     border-color: #2d6a4f; /* Deep green border */
 }
 
+/* Login Page */
+/* Container for login form */
+.login-container {
+    max-width: 400px;
+    width: 100%;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 0 auto; /* Center the container horizontally */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center using CSS transform */
+}
+
+/* Heading styling */
+.login-heading {
+    color: #006400; /* Dark green for heading */
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+/* Form group styling */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Label styling */
+.login-label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/* Input field styling */
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.form-control:focus {
+    border-color: #006400;
+    box-shadow: 0 0 8px rgba(0, 100, 0, 0.3);
+}
+
+/* Login button styling */
+.login-button {
+    background-color: #006400; /* Green button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #004d00; /* Darker green on hover */
+}
+
+/* Register link styling */
+.register-link {
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+.register-anchor {
+    color: #008000; /* Green */
+    text-decoration: none;
+}
+
+.register-anchor:hover {
+    text-decoration: underline;
+}
+
 /* Home Page */
 /* General container styling for home page */
 .home-container {

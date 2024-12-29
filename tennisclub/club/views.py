@@ -1,5 +1,9 @@
 from django.shortcuts import render
 
+# Login view
+def login(request):
+    return render(request, 'login.html')
+
 # Main view
 def main(request):
     return render(request, 'main.html')
