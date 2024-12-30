@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from .forms import TennisClubMemberRegistrationForm, TennisClubMemberLoginForm
+from .models import TennisClubMember
+
 
 # Login view
 def login_view(request):
@@ -36,7 +38,8 @@ def main(request):
 # Members view
 @login_required
 def members(request):
-    return render(request, 'members.html')
+    members = TennisClubMember.objects.all()  # Fetch all members
+    return render(request, 'members/members.html', {'members': members})
 
 # Member Registration view
 def member_registration(request):
@@ -51,7 +54,7 @@ def member_registration(request):
     else:
         form = TennisClubMemberRegistrationForm()
 
-    return render(request, 'registration/member_registration.html', {'form': form})
+    return render(request, 'members/member_registration.html', {'form': form})
 
 # Courts view
 @login_required

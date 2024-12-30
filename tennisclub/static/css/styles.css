@@ -128,6 +128,10 @@ footer p {
 .form-group {
     width: 100%;
     margin-bottom: 15px;
+    display: flex; /* Enable flexbox */
+    align-items: center; /* Center items vertically */
+    justify-content: space-between; /* Spread label and input */
+    margin-bottom: 15px;
 }
 
 .form-control {
@@ -277,7 +281,7 @@ footer p {
 /* Login Page */
 /* Container for login form */
 .login-container {
-    max-width: 400px;
+    max-width: 450px;
     width: 100%;
     padding: 30px;
     background-color: #ffffff;
@@ -298,16 +302,15 @@ footer p {
     margin-bottom: 20px;
 }
 
-/* Form group styling */
-.form-group {
-    margin-bottom: 15px;
-}
+
 
 /* Label styling */
 .login-label {
-    display: block;
-    margin-bottom: 5px;
+    flex: 1; /* Take up one part of the row */
+    text-align: left; /* Align text to the left */
     color: #333;
+    font-size: 0.9em;
+    margin-right: 10px; /* Add spacing between label and input */
 }
 
 /* Input field styling */
@@ -355,196 +358,10 @@ footer p {
     text-decoration: underline;
 }
 
-/* Home Page */
-/* General container styling for home page */
-.home-container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-/* Heading styling */
-.home-heading {
-    color: #006400; /* Dark green for the heading */
-    font-size: 1.5em;
-    margin-bottom: 20px;
-}
-
-/* Description styling */
-.home-description {
-    font-size: 1.0em;
-    color: #333;
-    line-height: 1.6;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .home-heading {
-        font-size: 2em;
-    }
-
-    .home-description {
-        font-size: 1em;
-    }
-}
-
-/* Members Page */
-/* General container styling for members page */
-.members-container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-/* Heading styling */
-.members-heading {
-    color: #006400; /* Dark green for the heading */
-    font-size: 1.5em;
-    margin-bottom: 20px;
-}
-
-/* Description styling */
-.members-description {
-    font-size: 1.0em;
-    color: #333;
-    line-height: 1.6;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .members-heading {
-        font-size: 1.8em;
-    }
-
-    .members-description {
-        font-size: 1em;
-    }
-}
-
-/* Courts Page */
-/* General container styling for courts page */
-.courts-container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-/* Heading styling */
-.courts-heading {
-    color: #006400; /* Dark green for the heading */
-    font-size: 1.5em;
-    margin-bottom: 20px;
-}
-
-/* Description styling */
-.courts-description {
-    font-size: 1.0em;
-    color: #333;
-    line-height: 1.6;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .courts-heading {
-        font-size: 1.8em;
-    }
-
-    .courts-description {
-        font-size: 1em;
-    }
-}
-
-/* About Page */
-/* General container styling */
-.about-container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-/* Heading styling */
-.about-heading {
-    color: #006400; /* Dark green for the heading */
-    font-size: 1.5em;
-    margin-bottom: 20px;
-}
-
-/* Description styling */
-.about-description {
-    font-size: 1.0em;
-    color: #333;
-    line-height: 1.6;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .about-heading {
-        font-size: 1.8em;
-    }
-
-    .about-description {
-        font-size: 1em;
-    }
-}
-
-/* Contact Page */
-/* General container styling */
-.contact-container {
-      max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-/* Heading styling */
-.contact-heading {
-    color: #006400; /* Dark green for the heading */
-    font-size: 1.5em;
-    margin-bottom: 20px;
-}
-
-/* Text styling */
-.contact-text {
-    font-size: 1.0em;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-/* Email link styling */
-.email-link {
-    color: #008000; /* Green email link */
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.email-link:hover {
-    text-decoration: underline;
-    color: #006400; /* Darker green on hover */
-}
-
 /* Registration Page */
 /* Container for registration form */
 .registration-container {
-    max-width: 500px;
+    max-width: 450px;
     width: 90%;
     max-height: 90vh;
     overflow-y: auto;
@@ -564,14 +381,6 @@ footer p {
 .registration-heading {
     color: #006400;
     font-size: 1.5em;
-    margin-bottom: 15px;
-}
-
-/* Form group styling */
-.form-group {
-    display: flex; /* Enable flexbox */
-    align-items: center; /* Center items vertically */
-    justify-content: space-between; /* Spread label and input */
     margin-bottom: 15px;
 }
 
@@ -627,4 +436,285 @@ footer p {
 
 .login-anchor:hover {
     text-decoration: underline;
+}
+/* Home Page */
+/* General container styling for home page */
+.home-container {
+    max-width: 1366px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Heading styling */
+.home-heading {
+    color: #006400; /* Dark green for the heading */
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+/* Description styling */
+.home-description {
+    font-size: 1.0em;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .home-heading {
+        font-size: 2em;
+    }
+
+    .home-description {
+        font-size: 1em;
+    }
+}
+
+/* Members Page */
+/* General container styling for members page */
+.members-container {
+    max-width: 1366px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Heading styling */
+.members-heading {
+    color: #006400; /* Dark green for the heading */
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+/* Description styling */
+.members-description {
+    font-size: 1.0em;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .members-heading {
+        font-size: 1.8em;
+    }
+
+    .members-description {
+        font-size: 1em;
+    }
+}
+
+/* Courts Page */
+/* General container styling for courts page */
+.courts-container {
+    max-width: 1366px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Heading styling */
+.courts-heading {
+    color: #006400; /* Dark green for the heading */
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+/* Description styling */
+.courts-description {
+    font-size: 1.0em;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .courts-heading {
+        font-size: 1.8em;
+    }
+
+    .courts-description {
+        font-size: 1em;
+    }
+}
+
+/* About Page */
+/* General container styling */
+.about-container {
+    max-width: 1366px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Heading styling */
+.about-heading {
+    color: #006400; /* Dark green for the heading */
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+/* Description styling */
+.about-description {
+    font-size: 1.0em;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .about-heading {
+        font-size: 1.8em;
+    }
+
+    .about-description {
+        font-size: 1em;
+    }
+}
+
+/* Contact Page */
+/* General container styling */
+.contact-container {
+    max-width: 1366px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Heading styling */
+.contact-heading {
+    color: #006400; /* Dark green for the heading */
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+/* Text styling */
+.contact-text {
+    font-size: 1.0em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Email link styling */
+.email-link {
+    color: #008000; /* Green email link */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.email-link:hover {
+    text-decoration: underline;
+    color: #006400; /* Darker green on hover */
+}
+
+/* Registration Page */
+/* Container for registration form */
+.registration-container {
+    max-width: 450px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Heading styling */
+.registration-heading {
+    color: #006400;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+/* Label styling */
+.registration-label {
+    flex: 1; /* Take up one part of the row */
+    text-align: left; /* Align text to the left */
+    color: #333;
+    font-size: 0.9em;
+    margin-right: 10px; /* Add spacing between label and input */
+}
+
+/* Input field styling */
+.form-control {
+    flex: 2; /* Take up more space for input fields */
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.form-control:focus {
+    border-color: #006400;
+    box-shadow: 0 0 8px rgba(0, 100, 0, 0.3);
+}
+
+/* Register button styling */
+.registration-button {
+    background-color: #006400;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.registration-button:hover {
+    background-color: #004d00;
+}
+
+/* Login link styling */
+.login-link {
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+.login-anchor {
+    color: #008000;
+    text-decoration: none;
+}
+
+.login-anchor:hover {
+    text-decoration: underline;
+}
+
+nav ul li a.logout {
+    float: right; /* Position logout button to the right */
+    color: white; /* Ensure contrast with green */
+    background-color: #d9ead3; /* Green-yellow from the hover styles */
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav ul li a.logout:hover {
+    background-color: #2d6a4f; /* Deep green hover for logout button */
+    color: white;
 }
