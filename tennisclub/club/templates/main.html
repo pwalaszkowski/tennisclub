@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Tennis Club - Home{% endblock %}
+
+{% block content %}
+    <div class="home-container">
+        <h1 class="home-heading">Welcome to the Tennis Club</h1>
+        <p class="home-description">
+            Welcome, {{ user.username }}!
+        </p>
+    </div>
+{% endblock %}
