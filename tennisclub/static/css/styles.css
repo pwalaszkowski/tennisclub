@@ -180,18 +180,22 @@ footer p {
     text-align: center;
 }
 
-/* Success Alert */
+/* Alert Success */
 .alert-success {
-    color: #155724;
-    background-color: #d4edda;
-    border-color: #c3e6cb;
+    color: green;
+    background-color: #e6ffe6;
+    border: 1px solid green;
+    padding: 10px;
+    margin: 10px 0;
 }
 
-/* Danger Alert */
-.alert-danger {
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
+/* Alert Error  */
+.alert-error {
+    color: red;
+    background-color: #ffe6e6;
+    border: 1px solid red;
+    padding: 10px;
+    margin: 10px 0;
 }
 
 /* Optional: Close Button for Alerts */

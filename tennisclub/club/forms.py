@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import make_password
 from django import forms
 from .models import TennisClubMember
 
@@ -23,8 +24,6 @@ class TennisClubMemberRegistrationForm(forms.ModelForm):
         widgets = {
             'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
         }
-        help_texts = {
-        }
 
     def clean_username(self):
         username = self.cleaned_data['username']
@@ -38,8 +37,16 @@ class TennisClubMemberRegistrationForm(forms.ModelForm):
             raise forms.ValidationError("Email is already registered.")
         return email
 
-    def clean_password(self):
-        password = self.cleaned_data['password']
-        if len(password) < 8:
-            raise forms.ValidationError("Password must be at least 8 characters long.")
-        return password
+    def save(self, commit=True):
+        # Get the instance without saving yet
+        instance = super().save(commit=False)
+        # Hash the password
+        instance.password = make_password(self.cleaned_data['password'])
+        if commit:
+            instance.save()
+        return instance
+
+
+class TennisClubMemberLoginForm(forms.Form):
+    username = forms.CharField(max_length=50)
+    password = forms.CharField(widget=forms.PasswordInput)

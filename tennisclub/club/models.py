@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.hashers import make_password, check_password
+
 
 class TennisClubMember(models.Model):
     ROLE_CHOICES = [
@@ -26,11 +28,23 @@ class TennisClubMember(models.Model):
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='member')
     is_active = models.BooleanField(default=True)
     password = models.CharField(max_length=128)  # Store hashed password
+    last_login = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} - {self.username}"
 
+    # Implement is_authenticated
+    def is_authenticated(self):
+        return self.is_active
+
+    def set_password(self, raw_password):
+        self.password = make_password(raw_password)
+        self.save()
+
+    def check_password(self, password):
+        return check_password(password, self.password)
+
     class Meta:
         ordering = ['last_name', 'first_name']
-        verbose_name = "Tennis Member"
-        verbose_name_plural = "Tennis Members"
+        verbose_name = "Tennis Club Member"
+        verbose_name_plural = "Tennis Club Members"

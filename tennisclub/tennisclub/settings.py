@@ -50,6 +50,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'club.auth_backends.TennisClubMemberBackend',  # Correct path
+    'django.contrib.auth.backends.ModelBackend',  # Optional: Django's default backend
+]
+
 ROOT_URLCONF = 'tennisclub.urls'
 
 TEMPLATES = [
@@ -125,3 +130,6 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Redirect when user is not authenticated
+LOGIN_URL = '/login/'

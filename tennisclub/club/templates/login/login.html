@@ -10,6 +10,15 @@
 <body>
     <div class="login-container">
         <h2 class="login-heading">Tennis Club - Login</h2>
+        {% if messages %}
+        <div>
+            {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
         <form action="{% url 'login' %}" method="post">
             {% csrf_token %}
             <div class="form-group">
