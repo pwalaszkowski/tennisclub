@@ -50,3 +50,15 @@ class TennisClubMemberRegistrationForm(forms.ModelForm):
 class TennisClubMemberLoginForm(forms.Form):
     username = forms.CharField(max_length=50)
     password = forms.CharField(widget=forms.PasswordInput)
+
+
+class TennisClubMemberProfileForm(forms.ModelForm):
+    class Meta:
+        model = TennisClubMember
+        fields = [
+            'first_name', 'last_name', 'email', 'phone_number',
+            'address', 'date_of_birth', 'membership_type'
+        ]
+        widgets = {
+            'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
+        }

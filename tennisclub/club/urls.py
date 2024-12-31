@@ -6,6 +6,7 @@ urlpatterns = [
     path('main/', views.main, name='main'),           # Main page
     path('members/members/', views.members, name='members'),  # Members page
     path('members/member_registration/', views.member_registration, name='member_registration'),
+    path('members/member_edit/', views.member_edit, name='member_edit'), # Member profile edit
     path('courts/', views.courts, name='courts'),    # Courts page
     path('about/', views.about, name='about'),      # About page
     path('contact/', views.contact, name='contact'),  # Contact page

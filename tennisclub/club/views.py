@@ -4,7 +4,8 @@ from django.utils.timezone import now
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from .forms import TennisClubMemberRegistrationForm, TennisClubMemberLoginForm
+from .forms import TennisClubMemberRegistrationForm, TennisClubMemberLoginForm, \
+    TennisClubMemberProfileForm
 from .models import TennisClubMember
 
 
@@ -55,6 +56,20 @@ def member_registration(request):
         form = TennisClubMemberRegistrationForm()
 
     return render(request, 'members/member_registration.html', {'form': form})
+
+@login_required
+def member_edit(request):
+    user = request.user.tennisclubmember  # Assuming `TennisClubMember` is tied to `User`
+    if request.method == 'POST':
+        form = TennisClubMemberProfileForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile has been updated successfully!')
+            return redirect('member_edit')
+    else:
+        form = TennisClubMemberProfileForm(instance=user)
+
+    return render(request, 'nenbers/member_edit.html', {'form': form})
 
 # Courts view
 @login_required
