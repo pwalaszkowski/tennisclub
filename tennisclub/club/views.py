@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.utils.timezone import now
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.models import User
 
 from .forms import TennisClubMemberRegistrationForm, TennisClubMemberLoginForm, \
     TennisClubMemberProfileForm
@@ -47,9 +48,36 @@ def member_registration(request):
     if request.method == 'POST':
         form = TennisClubMemberRegistrationForm(request.POST)
         if form.is_valid():
-            form.save()  # Save the form, including password hashing
-            messages.success(request, "Registration successful!")
-            return redirect('login')  # Redirect to a success page or login
+            # Extract cleaned data
+            data = form.cleaned_data
+            username = data.get('username')
+            password = data.get('password')
+            email = data.get('email')
+
+            try:
+                # Create the User object
+                user = User.objects.create_user(
+                    username=username,
+                    password=password,
+                    email=email,
+                )
+
+                # Create the TennisClubMember object
+                TennisClubMember.objects.create(
+                    user=user,
+                    first_name=data.get('first_name'),
+                    last_name=data.get('last_name'),
+                    phone_number=data.get('phone_number'),
+                    date_of_birth=data.get('date_of_birth'),
+                    address=data.get('address'),
+                    membership_type=data.get('membership_type'),
+                )
+
+                messages.success(request, "Registration successful!")
+                return redirect('login')  # Redirect to login or success page
+            except Exception as e:
+                messages.error(request, f"An error occurred during registration: {e}")
+                return redirect('member_registration')
         else:
             messages.error(request, "There were errors in the form. Please correct them.")
     else:
@@ -69,7 +97,7 @@ def member_edit(request):
     else:
         form = TennisClubMemberProfileForm(instance=user)
 
-    return render(request, 'nenbers/member_edit.html', {'form': form})
+    return render(request, 'members/member_edit.html', {'form': form})
 
 # Courts view
 @login_required
