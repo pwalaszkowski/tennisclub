@@ -2,24 +2,18 @@ from django.contrib.auth.hashers import make_password
 from django import forms
 from .models import TennisClubMember
 
+from django import forms
+from .models import TennisClubMember
+
 class TennisClubMemberRegistrationForm(forms.ModelForm):
-    password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'Enter password'}),
-    )
+    username = forms.CharField(max_length=150, required=True)
+    password = forms.CharField(widget=forms.PasswordInput, required=True)
 
     class Meta:
         model = TennisClubMember
         fields = [
-            'username',
-            'first_name',
-            'last_name',
-            'email',
-            'phone_number',
-            'date_of_birth',
-            'address',
-            'membership_type',
-            'role',
-            'password',
+            'first_name', 'last_name', 'email', 'phone_number',
+            'date_of_birth', 'address', 'membership_type',
         ]
         widgets = {
             'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
@@ -50,3 +44,15 @@ class TennisClubMemberRegistrationForm(forms.ModelForm):
 class TennisClubMemberLoginForm(forms.Form):
     username = forms.CharField(max_length=50)
     password = forms.CharField(widget=forms.PasswordInput)
+
+
+class TennisClubMemberProfileForm(forms.ModelForm):
+    class Meta:
+        model = TennisClubMember
+        fields = [
+            'first_name', 'last_name', 'email', 'phone_number',
+            'address', 'date_of_birth', 'membership_type'
+        ]
+        widgets = {
+            'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
+        }
