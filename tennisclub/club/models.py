@@ -35,6 +35,18 @@ class TennisClubMember(models.Model):
     def __str__(self):
         return f"{self.first_name} {self.last_name} - {self.username}"
 
+    def save(self, *args, **kwargs):
+        if self.user:
+            # Sync the email with the related User model
+            if not self.email:
+                self.email = self.user.email  # Set email from User model if not provided
+            else:
+                self.user.email = self.email  # Update User's email if TennisClubMember's email changes
+                self.user.save()
+        if not self.username:
+            self.username = self.user.username  # Auto-assign username from related User
+        super().save(*args, **kwargs)
+
     # Implement is_authenticated
     def is_authenticated(self):
         return self.is_active
