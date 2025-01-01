@@ -1,6 +1,6 @@
 from django.contrib.auth.hashers import make_password
 from django import forms
-from .models import TennisClubMember
+from .models import TennisClubMember, Court, Reservation
 
 from django import forms
 from .models import TennisClubMember
@@ -56,3 +56,29 @@ class TennisClubMemberProfileForm(forms.ModelForm):
         widgets = {
             'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
         }
+
+class CourtForm(forms.ModelForm):
+    class Meta:
+        model = Court
+        fields = ['name', 'location', 'surface', 'lighting', 'indoor_outdoor']
+
+
+class ReservationForm(forms.ModelForm):
+    class Meta:
+        model = Reservation
+        fields = ['court', 'date', 'timeslot']
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}),
+            'timeslot': forms.Select(),
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        court = cleaned_data.get('court')
+        date = cleaned_data.get('date')
+        timeslot = cleaned_data.get('timeslot')
+
+        # Check for existing reservations
+        if Reservation.objects.filter(court=court, date=date, timeslot=timeslot).exists():
+            raise forms.ValidationError("This timeslot is already reserved.")
+        return cleaned_data

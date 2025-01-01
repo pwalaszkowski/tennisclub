@@ -5,6 +5,13 @@
 {% block content %}
 <div class="courts-container">
     <h1 class="courts-heading">Edit Profile</h1>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
     <p class="courts-description">
         <form method="POST" novalidate>
             {% csrf_token %}
@@ -14,12 +21,5 @@
                 <a href="{% url 'members' %}" class="btn btn-secondary">Discard Changes</a>
             </div>
         </form>
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
 </div>
 {% endblock %}

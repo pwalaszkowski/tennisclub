@@ -1,3 +1,4 @@
+from datetime import time
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password, check_password
@@ -62,3 +63,48 @@ class TennisClubMember(models.Model):
         ordering = ['last_name', 'first_name']
         verbose_name = "Tennis Club Member"
         verbose_name_plural = "Tennis Club Members"
+
+
+class Court(models.Model):
+    SURFACE_CHOICES = [
+        ('clay', 'Clay'),
+        ('grass', 'Grass'),
+        ('hard', 'Hard'),
+        ('synthetic', 'Synthetic'),
+    ]
+    LIGHTING_CHOICES = [
+        ('none', 'None'),
+        ('standard', 'Standard'),
+        ('led', 'LED'),
+    ]
+    INDOOR_OUTDOOR_CHOICES = [
+        ('indoor', 'Indoor'),
+        ('outdoor', 'Outdoor'),
+        ('both', 'Both'),
+    ]
+
+    name = models.CharField(max_length=100, unique=True)
+    location = models.CharField(max_length=255, blank=True, null=True)
+    surface = models.CharField(max_length=50, choices=SURFACE_CHOICES, default='hard')
+    lighting = models.CharField(max_length=50, choices=LIGHTING_CHOICES, default='none')
+    indoor_outdoor = models.CharField(max_length=50, choices=INDOOR_OUTDOOR_CHOICES, default='outdoor')
+
+    def __str__(self):
+        return self.name
+
+
+class Reservation(models.Model):
+    TIMESLOT_CHOICES = [
+        (time(hour=i), f"{i}:00 - {i+1}:00") for i in range(7, 22)
+    ]
+    member = models.ForeignKey(TennisClubMember, on_delete=models.CASCADE, related_name="reservations")
+    court = models.ForeignKey(Court, on_delete=models.CASCADE, related_name="reservations")
+    date = models.DateField()
+    timeslot = models.TimeField(choices=TIMESLOT_CHOICES)
+
+    class Meta:
+        unique_together = ('court', 'date', 'timeslot')
+        ordering = ['date', 'timeslot']
+
+    def __str__(self):
+        return f"{self.court.name} - {self.date} - {self.timeslot.strftime('%H:%M')}"

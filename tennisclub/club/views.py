@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.utils.timezone import now
 from django.contrib.auth.decorators import login_required
@@ -6,8 +6,8 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 
 from .forms import TennisClubMemberRegistrationForm, TennisClubMemberLoginForm, \
-    TennisClubMemberProfileForm
-from .models import TennisClubMember
+    TennisClubMemberProfileForm, CourtForm, ReservationForm
+from .models import TennisClubMember, Court, Reservation
 
 
 # Login view
@@ -101,8 +101,43 @@ def member_edit(request):
 
 # Courts view
 @login_required
+@login_required
 def courts(request):
-    return render(request, 'courts.html')
+    courts_list = Court.objects.all()  # Fetch all courts
+    reservations = Reservation.objects.all() # Fetch all reservations
+
+    return render(request, 'courts.html', {'courts': courts_list, 'reservations': reservations})
+
+@login_required
+def add_court(request):
+    if request.method == 'POST':
+        form = CourtForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Court added successfully!")
+            return redirect('courts')  # Redirect to court list after adding
+        else:
+            messages.error(request, "Failed to add court. Please check the form.")
+    else:
+        form = CourtForm()
+    return render(request, 'courts/add_court.html', {'form': form})
+
+@login_required
+def reserve_court(request):
+    if request.method == 'POST':
+        form = ReservationForm(request.POST)
+        if form.is_valid():
+            reservation = form.save(commit=False)
+            reservation.member = request.user.tennisclubmember  # Link to logged-in member
+            reservation.save()
+            messages.success(request, "Reservation successful!")
+            return redirect('courts')
+        else:
+            messages.error(request, "Failed to make reservation. Please check the form.")
+    else:
+        form = ReservationForm()
+    return render(request, 'courts/reserve_court.html', {'form': form})
+
 
 # About view
 @login_required
