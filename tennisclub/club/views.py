@@ -101,12 +101,29 @@ def member_edit(request):
 
 # Courts view
 @login_required
-@login_required
 def courts(request):
     courts_list = Court.objects.all()  # Fetch all courts
-    reservations = Reservation.objects.all() # Fetch all reservations
+    reservations = Reservation.objects.all()  # Fetch all reservations
 
-    return render(request, 'courts/courts.html', {'courts': courts_list, 'reservations': reservations})
+    if request.method == 'POST':
+        # Handle selection and actions (edit or delete)
+        selected_reservations = request.POST.getlist('selected_reservations')
+
+        if 'edit_selected' in request.POST:
+            # Handle edit action for selected reservations
+            for reservation_id in selected_reservations:
+                reservation = get_object_or_404(Reservation, id=reservation_id)
+                # Redirect to edit page with reservation ID
+                return redirect('reservation_edit', pk=reservation_id)
+
+        elif 'delete_selected' in request.POST:
+            # Handle delete action for selected reservations
+            Reservation.objects.filter(id__in=selected_reservations).delete()
+            messages.success(request, "Selected reservations deleted successfully.")
+            return redirect('courts')
+
+    return render(request, 'courts/courts.html',
+                  {'courts': courts_list, 'reservations': reservations})
 
 @login_required
 def court_add(request):
@@ -138,6 +155,18 @@ def court_reservation(request):
         form = ReservationForm()
     return render(request, 'courts/court_reservation.html', {'form': form})
 
+@login_required
+def court_reservation_edit(request, pk):
+    reservation = get_object_or_404(Reservation, pk=pk)
+    if request.method == 'POST':
+        form = ReservationForm(request.POST, instance=reservation)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Reservation updated successfully!")
+            return redirect('courts')
+    else:
+        form = ReservationForm(instance=reservation)
+    return render(request, 'courts/court_reservation_edit.html', {'form': form})
 
 # About view
 @login_required
