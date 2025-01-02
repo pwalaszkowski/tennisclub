@@ -12,7 +12,6 @@ env/
 # Django database
 db.sqlite3
 *.sqlite3
-sqlite3.exe
 
 # Django migrations
 migrations/

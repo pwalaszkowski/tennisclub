@@ -20,13 +20,13 @@ class TennisClubMemberRegistrationForm(forms.ModelForm):
     def clean_username(self):
         username = self.cleaned_data['username']
         if TennisClubMember.objects.filter(username=username).exists():
-            raise forms.ValidationError("Username is already taken.")
+            raise forms.ValidationError('Username is already taken.')
         return username
 
     def clean_email(self):
         email = self.cleaned_data['email']
         if TennisClubMember.objects.filter(email=email).exists():
-            raise forms.ValidationError("Email is already registered.")
+            raise forms.ValidationError('Email is already registered.')
         return email
 
     def save(self, commit=True):
@@ -78,5 +78,5 @@ class ReservationForm(forms.ModelForm):
 
         # Check for existing reservations
         if Reservation.objects.filter(court=court, date=date, timeslot=timeslot).exists():
-            raise forms.ValidationError("This timeslot is already reserved.")
+            raise forms.ValidationError('This timeslot is already reserved.')
         return cleaned_data

@@ -4,33 +4,62 @@ from django.utils.timezone import now
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
+from rest_framework import viewsets, permissions
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from .forms import TennisClubMemberRegistrationForm, TennisClubMemberLoginForm, \
     TennisClubMemberProfileForm, CourtForm, ReservationForm
 from .models import TennisClubMember, Court, Reservation
+from .serializers import TennisClubMemberSerializer, CourtSerializer, ReservationSerializer
 
 
-# Login view
+class TennisClubMemberViewSet(viewsets.ModelViewSet):
+    queryset = TennisClubMember.objects.all()
+    serializer_class = TennisClubMemberSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class CourtViewSet(viewsets.ModelViewSet):
+    queryset = Court.objects.all()
+    serializer_class = CourtSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class ReservationViewSet(viewsets.ModelViewSet):
+    serializer_class = ReservationSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Reservation.objects.filter(member=self.request.user.tennisclubmember)
+
+    def perform_create(self, serializer):
+        serializer.save(member=self.request.user.tennisclubmember)
+
+
 def login_view(request):
     if request.method == 'POST':
         form = TennisClubMemberLoginForm(request.POST)
         if form.is_valid():
-            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
-            if user is not None:
-                user.last_login = now()  # Update last login timestamp
-                user.save()
-                login(request, user)
-                return redirect('main')
-        else:
-                form.add_error(None, "Invalid username or password.")
+            user = authenticate(
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password']
+            )
+            if user:
+                refresh = RefreshToken.for_user(user)
+                response = redirect('main')
+                response.set_cookie('access_token', str(refresh.access_token), httponly=True)
+                response.set_cookie('refresh_token', str(refresh), httponly=True)
+                return response
+            messages.error(request, 'Invalid username or password.')
     else:
         form = TennisClubMemberLoginForm()
-
     return render(request, 'login/login.html', {'form': form})
 
 def logout_view(request):
-    logout(request)
-    return redirect('login')  # Redirect to login page after logout
+    response = redirect('login')
+    response.delete_cookie('access_token')
+    response.delete_cookie('refresh_token')
+    return response
 
 # Main view
 @login_required
@@ -73,13 +102,13 @@ def member_registration(request):
                     membership_type=data.get('membership_type'),
                 )
 
-                messages.success(request, "Registration successful!")
+                messages.success(request, 'Registration successful!')
                 return redirect('login')  # Redirect to login or success page
             except Exception as e:
-                messages.error(request, f"An error occurred during registration: {e}")
+                messages.error(request, f'An error occurred during registration: {e}')
                 return redirect('member_registration')
         else:
-            messages.error(request, "There were errors in the form. Please correct them.")
+            messages.error(request, 'There were errors in the form. Please correct them.')
     else:
         form = TennisClubMemberRegistrationForm()
 
@@ -118,7 +147,7 @@ def courts(request):
         elif 'delete_selected' in request.POST:
             # Handle delete action for selected reservations
             Reservation.objects.filter(id__in=selected_reservations).delete()
-            messages.success(request, "Selected reservations deleted successfully.")
+            messages.success(request, 'Selected reservations deleted successfully.')
             return redirect('courts')
 
     return render(request, 'courts/courts.html',
@@ -130,10 +159,10 @@ def court_add(request):
         form = CourtForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "Court added successfully!")
+            messages.success(request, 'Court added successfully!')
             return redirect('courts')  # Redirect to court list after adding
         else:
-            messages.error(request, "Failed to add court. Please check the form.")
+            messages.error(request, 'Failed to add court. Please check the form.')
     else:
         form = CourtForm()
     return render(request, 'courts/court_add.html', {'form': form})
@@ -146,10 +175,10 @@ def court_reservation(request):
             reservation = form.save(commit=False)
             reservation.member = request.user.tennisclubmember  # Link to logged-in member
             reservation.save()
-            messages.success(request, "Reservation successful!")
+            messages.success(request, 'Reservation successful!')
             return redirect('courts')
         else:
-            messages.error(request, "Failed to make reservation. Please check the form.")
+            messages.error(request, 'Failed to make reservation. Please check the form.')
     else:
         form = ReservationForm()
     return render(request, 'courts/court_reservation.html', {'form': form})
@@ -161,7 +190,7 @@ def court_reservation_edit(request, pk):
         form = ReservationForm(request.POST, instance=reservation)
         if form.is_valid():
             form.save()
-            messages.success(request, "Reservation updated successfully!")
+            messages.success(request, 'Reservation updated successfully!')
             return redirect('courts')
     else:
         form = ReservationForm(instance=reservation)
