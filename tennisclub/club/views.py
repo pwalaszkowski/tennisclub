@@ -9,7 +9,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-
 from .forms import TennisClubMemberRegistrationForm, TennisClubMemberLoginForm, \
     TennisClubMemberProfileForm, CourtForm, ReservationForm
 from .models import TennisClubMember, Court, Reservation
