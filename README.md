@@ -186,7 +186,9 @@ The `timeslot` field offers choices for timeslots ranging from 7:00 AM to 10:00 
 ## Tests
 1. Running tests
     ```bash
-    python manage.py tests 
+    python manage.py test
     ```
    
-2. Tests are not available in version 1.0
+2. Tests status
+* Master [![Tennis Club Tests](https://github.com/pwalaszkowski/tclub/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/pwalaszkowski/tclub/actions/workflows/ci.yaml)
+* Develop [![Tennis Club Tests](https://github.com/pwalaszkowski/tclub/actions/workflows/ci.yaml/badge.svg?branch=develop)](https://github.com/pwalaszkowski/tclub/actions/workflows/ci.yaml)

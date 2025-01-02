@@ -34,7 +34,7 @@ class TennisClubMember(models.Model):
     last_login = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name} - {self.username}"
+        return f'{self.first_name} {self.last_name} - {self.username}'
 
     def save(self, *args, **kwargs):
         if self.user:
@@ -62,8 +62,8 @@ class TennisClubMember(models.Model):
 
     class Meta:
         ordering = ['last_name', 'first_name']
-        verbose_name = "Tennis Club Member"
-        verbose_name_plural = "Tennis Club Members"
+        verbose_name = 'Tennis Club Member'
+        verbose_name_plural = 'Tennis Club Members'
 
 
 class Court(models.Model):
@@ -97,11 +97,11 @@ class Court(models.Model):
 
 class Reservation(models.Model):
     TIMESLOT_CHOICES = [
-        (time(hour=i), f"{i}:00 - {i+1}:00") for i in range(7, 22)
+        (time(hour=i), f'{i}:00 - {i+1}:00') for i in range(7, 22)
     ]
     member = models.ForeignKey(TennisClubMember, on_delete=models.CASCADE,
-                               related_name="reservations")
-    court = models.ForeignKey(Court, on_delete=models.CASCADE, related_name="reservations")
+                               related_name='reservations')
+    court = models.ForeignKey(Court, on_delete=models.CASCADE, related_name='reservations')
     date = models.DateField()
     timeslot = models.TimeField(choices=TIMESLOT_CHOICES)
 
@@ -110,4 +110,4 @@ class Reservation(models.Model):
         ordering = ['date', 'timeslot']
 
     def __str__(self):
-        return f"{self.court.name} - {self.date} - {self.timeslot.strftime('%H:%M')}"
+        return f'{self.court.name} - {self.date} - {self.timeslot.strftime('%H:%M')}'
