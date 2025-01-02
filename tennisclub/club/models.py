@@ -42,7 +42,8 @@ class TennisClubMember(models.Model):
             if not self.email:
                 self.email = self.user.email  # Set email from User model if not provided
             else:
-                self.user.email = self.email  # Update User's email if TennisClubMember's email changes
+                self.user.email = self.email  # Update User's email if
+                                              # TennisClubMember's email changes
                 self.user.save()
         if not self.username:
             self.username = self.user.username  # Auto-assign username from related User
@@ -87,7 +88,8 @@ class Court(models.Model):
     location = models.CharField(max_length=255, blank=True, null=True)
     surface = models.CharField(max_length=50, choices=SURFACE_CHOICES, default='hard')
     lighting = models.CharField(max_length=50, choices=LIGHTING_CHOICES, default='none')
-    indoor_outdoor = models.CharField(max_length=50, choices=INDOOR_OUTDOOR_CHOICES, default='outdoor')
+    indoor_outdoor = models.CharField(max_length=50, choices=INDOOR_OUTDOOR_CHOICES,
+                                      default='outdoor')
 
     def __str__(self):
         return self.name
@@ -97,7 +99,8 @@ class Reservation(models.Model):
     TIMESLOT_CHOICES = [
         (time(hour=i), f"{i}:00 - {i+1}:00") for i in range(7, 22)
     ]
-    member = models.ForeignKey(TennisClubMember, on_delete=models.CASCADE, related_name="reservations")
+    member = models.ForeignKey(TennisClubMember, on_delete=models.CASCADE,
+                               related_name="reservations")
     court = models.ForeignKey(Court, on_delete=models.CASCADE, related_name="reservations")
     date = models.DateField()
     timeslot = models.TimeField(choices=TIMESLOT_CHOICES)
