@@ -1,5 +1,15 @@
 # Tennis Club 1.0
 
+### Table of Contents  
+- [Overview](#Overview)
+- [Prerequisites](#prerequisites)  
+- [Installation](#installation)  
+- [Project Configuration](#project-configuration)  
+- [Application Usage](#application-usage)  
+- [Reservation Model](#reservation-model)  
+- [Architecture](#architecture)
+- [Tests](#tests)
+
 ## Overview  
 This project is a simple Tennis Club application which allow to register new user, adding courts
 and making game reservations.
@@ -87,7 +97,7 @@ Examples:
 ## Architecture
 ### Table of Contents  
 - [TennisClubMember Model](#tennisclubmember-model)  
-  - [Overview](#overview)  
+  - [Architecture Overview](#architecture-overview )  
   - [Fields and Attributes](#fields-and-attributes)  
   - [Methods](#methods)  
 - [Court Model](#court-model)  
@@ -100,7 +110,7 @@ Examples:
 ---
 
 ### TennisClubMember Model  
-#### Overview  
+#### Architecture Overview  
 The `TennisClubMember` model represents a member of the tennis club. It is linked to the built-in `User` model from Django for authentication purposes. Members have various attributes such as personal details, role, membership type, and contact information.  
 
 #### Fields and Attributes  
