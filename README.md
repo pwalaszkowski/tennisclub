@@ -94,6 +94,9 @@ Examples:
 
 ![img6.png](img/img6.png)
 
+## Token Management
+![img7.png](img/img7.png)
+
 ## Architecture
 ### Table of Contents  
 - [TennisClubMember Model](#tennisclubmember-model)  
