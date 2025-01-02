@@ -17,9 +17,9 @@
     {% endif %}
 
     <p class="courts-description">
-    Information about our tennis courts, including location and availability.
+        Information about our tennis courts, including location and availability.
     <p class="courts-description">
-    Court is not visible? add it here <a href="{% url 'add_court' %}" class="email-link">Add Court</a>
+        Court is not visible? add it here <a href="{% url 'court_add' %}" class="email-link">Add Court</a>
 
     <table class="table">
         <thead>
@@ -43,33 +43,38 @@
             {% endfor %}
         </tbody>
     </table>
-    <h1 class="courts-heading">Your Reservations</h1>
-    <p class="courts-description">
-    Want to reserve court? <a href="{% url 'reserve_court' %}" class="email-link">Reserve Court</a>
-    {% if reservations %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Member</th>
-                <th>Court Name</th>
-                <th>Date</th>
-                <th>Timeslot</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for reservation in reservations %}
-            <tr>
-                <td>{{ reservation.member.username}} </td>
-                <td>{{ reservation.court }}</td>
-                <td>{{ reservation.date }}</td>
-                <td>{{ reservation.timeslot }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-    <p>No reservations found.</p>
-    {% endif %}
-</div>
 
+  <h1 class="courts-heading">Your Reservations</h1>
+  <p class="courts-description">
+    Want to reserve court? <a href="{% url 'court_reservation' %}" class="email-link">Reserve Court</a>
+    <table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Court</th>
+            <th>Date</th>
+            <th>Time Slot</th>
+            <th>Member</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for reservation in reservations %}
+        <tr>
+            <td>{{ reservation.court.name }}</td>
+            <td>{{ reservation.date }}</td>
+            <td>{{ reservation.timeslot }}</td>
+            <td>{{ reservation.member }}</td>
+            <td>
+            <a href="{% url 'court_reservation_edit' reservation.id %}" class="btn btn-primary">Edit</a>
+                <form action="{% url 'courts' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="selected_reservations" value="{{ reservation.id }}">
+                    <button type="submit" name="delete_selected" class="btn btn-secondary">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
 {% endblock %}
