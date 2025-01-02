@@ -5,9 +5,8 @@
 {% block content %}
 <h1>Make a Reservation</h1>
 <form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Reserve</button>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Reserve</button>
 </form>
-</ul>
 {% endblock %}

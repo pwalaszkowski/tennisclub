@@ -9,34 +9,34 @@
 </head>
 <body>
 
-    <!-- Header Section -->
-    <header>
-        <h1>WSB Tennis Club</h1>
-        <!-- Future logo space -->
-    </header>
+<!-- Header Section -->
+<header>
+    <h1>WSB Tennis Club</h1>
+    <!-- Future logo space -->
+</header>
 
-    <!-- Navigation Section -->
-    <nav>
-        <ul>
-                <li><a href="{% url 'main' %}">Home</a></li>
-                <li><a href="{% url 'members' %}">Members</a></li>
-                <li><a href="{% url 'courts' %}">Courts</a></li>
-                <li><a href="{% url 'about' %}">About</a></li>
-                <li><a href="{% url 'contact' %}">Contact</a></li>
-                <li><a href="{% url 'logout' %}">Logout</a></li> <!-- Logout button -->
+<!-- Navigation Section -->
+<nav>
+    <ul>
+            <li><a href="{% url 'main' %}">Home</a></li>
+            <li><a href="{% url 'members' %}">Members</a></li>
+            <li><a href="{% url 'courts' %}">Courts</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li> <!-- Logout button -->
 
-        </ul>
-    </nav>
+    </ul>
+</nav>
 
-    <!-- Main Content Section -->
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+<!-- Main Content Section -->
+<main>
+    {% block content %}{% endblock %}
+</main>
 
-    <!-- Footer Section -->
-    <footer>
-        <p>&copy; 2024 WSB Tennis Club. All Rights Reserved.</p>
-    </footer>
+<!-- Footer Section -->
+<footer>
+    <p>&copy; 2024 WSB Tennis Club. All Rights Reserved.</p>
+</footer>
 
 </body>
 </html>
