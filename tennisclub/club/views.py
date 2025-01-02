@@ -106,10 +106,10 @@ def courts(request):
     courts_list = Court.objects.all()  # Fetch all courts
     reservations = Reservation.objects.all() # Fetch all reservations
 
-    return render(request, 'courts.html', {'courts': courts_list, 'reservations': reservations})
+    return render(request, 'courts/courts.html', {'courts': courts_list, 'reservations': reservations})
 
 @login_required
-def add_court(request):
+def court_add(request):
     if request.method == 'POST':
         form = CourtForm(request.POST)
         if form.is_valid():
@@ -120,10 +120,10 @@ def add_court(request):
             messages.error(request, "Failed to add court. Please check the form.")
     else:
         form = CourtForm()
-    return render(request, 'courts/add_court.html', {'form': form})
+    return render(request, 'courts/court_add.html', {'form': form})
 
 @login_required
-def reserve_court(request):
+def court_reservation(request):
     if request.method == 'POST':
         form = ReservationForm(request.POST)
         if form.is_valid():
@@ -136,7 +136,7 @@ def reserve_court(request):
             messages.error(request, "Failed to make reservation. Please check the form.")
     else:
         form = ReservationForm()
-    return render(request, 'courts/reserve_court.html', {'form': form})
+    return render(request, 'courts/court_reservation.html', {'form': form})
 
 
 # About view

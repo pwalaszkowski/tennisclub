@@ -19,7 +19,7 @@
     <p class="courts-description">
         Information about our tennis courts, including location and availability.
     <p class="courts-description">
-        Court is not visible? add it here <a href="{% url 'add_court' %}" class="email-link">Add Court</a>
+        Court is not visible? add it here <a href="{% url 'court_add' %}" class="email-link">Add Court</a>
 
     <table class="table">
         <thead>
@@ -46,7 +46,7 @@
 
   <h1 class="courts-heading">Your Reservations</h1>
   <p class="courts-description">
-    Want to reserve court? <a href="{% url 'reserve_court' %}" class="email-link">Reserve Court</a>
+    Want to reserve court? <a href="{% url 'court_reservation' %}" class="email-link">Reserve Court</a>
     {% if reservations %}
     <table class="table">
         <thead>
