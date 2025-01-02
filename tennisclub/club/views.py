@@ -21,7 +21,7 @@ def login_view(request):
                 user.save()
                 login(request, user)
                 return redirect('main')
-            else:
+        else:
                 form.add_error(None, "Invalid username or password.")
     else:
         form = TennisClubMemberLoginForm()
@@ -112,7 +112,6 @@ def courts(request):
         if 'edit_selected' in request.POST:
             # Handle edit action for selected reservations
             for reservation_id in selected_reservations:
-                reservation = get_object_or_404(Reservation, id=reservation_id)
                 # Redirect to edit page with reservation ID
                 return redirect('reservation_edit', pk=reservation_id)
 

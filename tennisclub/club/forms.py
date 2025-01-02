@@ -1,9 +1,7 @@
-from django.contrib.auth.hashers import make_password
 from django import forms
+from django.contrib.auth.hashers import make_password
 from .models import TennisClubMember, Court, Reservation
 
-from django import forms
-from .models import TennisClubMember
 
 class TennisClubMemberRegistrationForm(forms.ModelForm):
     username = forms.CharField(max_length=150, required=True)
