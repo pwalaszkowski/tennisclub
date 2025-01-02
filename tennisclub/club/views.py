@@ -4,33 +4,63 @@ from django.utils.timezone import now
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
+from rest_framework import viewsets, permissions
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.views import TokenObtainPairView
+
 
 from .forms import TennisClubMemberRegistrationForm, TennisClubMemberLoginForm, \
     TennisClubMemberProfileForm, CourtForm, ReservationForm
 from .models import TennisClubMember, Court, Reservation
+from .serializers import TennisClubMemberSerializer, CourtSerializer, ReservationSerializer
 
 
-# Login view
+class TennisClubMemberViewSet(viewsets.ModelViewSet):
+    queryset = TennisClubMember.objects.all()
+    serializer_class = TennisClubMemberSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class CourtViewSet(viewsets.ModelViewSet):
+    queryset = Court.objects.all()
+    serializer_class = CourtSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class ReservationViewSet(viewsets.ModelViewSet):
+    serializer_class = ReservationSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Reservation.objects.filter(member=self.request.user.tennisclubmember)
+
+    def perform_create(self, serializer):
+        serializer.save(member=self.request.user.tennisclubmember)
+
+
 def login_view(request):
     if request.method == 'POST':
         form = TennisClubMemberLoginForm(request.POST)
         if form.is_valid():
-            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
-            if user is not None:
-                user.last_login = now()  # Update last login timestamp
-                user.save()
-                login(request, user)
-                return redirect('main')
-        else:
-                form.add_error(None, "Invalid username or password.")
+            user = authenticate(
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password']
+            )
+            if user:
+                refresh = RefreshToken.for_user(user)
+                response = redirect('main')
+                response.set_cookie('access_token', str(refresh.access_token), httponly=True)
+                response.set_cookie('refresh_token', str(refresh), httponly=True)
+                return response
+            form.add_error(None, "Invalid username or password.")
     else:
         form = TennisClubMemberLoginForm()
-
     return render(request, 'login/login.html', {'form': form})
 
 def logout_view(request):
-    logout(request)
-    return redirect('login')  # Redirect to login page after logout
+    response = redirect('login')
+    response.delete_cookie('access_token')
+    response.delete_cookie('refresh_token')
+    return response
 
 # Main view
 @login_required
