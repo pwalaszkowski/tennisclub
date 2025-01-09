@@ -52,7 +52,19 @@ class TennisClubMemberProfileForm(forms.ModelForm):
             'address', 'date_of_birth', 'membership_type'
         ]
         widgets = {
-            'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
+            'first_name': forms.TextInput(
+                attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(
+                attrs={'class': 'form-control'}),
+            'email': forms.TextInput(
+                attrs={'class': 'form-control'}),
+            'phone_number': forms.TextInput(
+                attrs={'class': 'form-control'}),
+            'address': forms.TextInput(
+                attrs={'class': 'form-control'}),
+            'date_of_birth': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'membership_type': forms.Select(
+                attrs={'class': 'form-control'}),
         }
 
 class CourtForm(forms.ModelForm):
@@ -66,8 +78,9 @@ class ReservationForm(forms.ModelForm):
         model = Reservation
         fields = ['court', 'date', 'timeslot']
         widgets = {
-            'date': forms.DateInput(attrs={'type': 'date'}),
-            'timeslot': forms.Select(),
+            'court': forms.Select(attrs={'class': 'form-control'}),
+            'date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'timeslot': forms.Select(attrs={'class': 'form-control'}),
         }
 
     def clean(self):
