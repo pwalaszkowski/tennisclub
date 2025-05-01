@@ -717,3 +717,14 @@ nav ul li a.logout:hover {
     background-color: #2d6a4f; /* Deep green hover for logout button */
     color: white;
 }
+
+.install-button {
+    background-color: #2d6a4f;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
